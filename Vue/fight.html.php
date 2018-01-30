@@ -39,8 +39,9 @@
 
 <h1>En avant <?php echo $personnage->getNom()?>!</h1>
 
-    <img class="float-left" src="<?php echo $personnage->getImage() ?>">
-
+    <img src="<?php echo $personnage->getImage() ?>">
+<br/>
+    <br/>
 <form method="post">
     <div class="form-group">
         <label for="nom">Choisissez l'adversaire</label>
@@ -63,7 +64,10 @@
             <a href="?fermer"><button class="btn btn-primary">Créer un nouveau personnage</button></a>
         </div>
     <?php else: ?>
-    <input type="submit" name="fight" value="Fight !">
+    <?php foreach ($attacks as $attack): ?>
+            <input type="submit" class="btn btn-dark" name="attack" value="<?php echo $attack->getNom(); ?>">
+<!--    <input type="submit" name="fight" value="Fight !">-->
+    <?php endforeach ?>
 </form>
     <?php endif ?>
 
@@ -73,6 +77,7 @@
             <?php echo $message ?>
         </div>
     <?php endif; ?>
+
 
 </main>
 

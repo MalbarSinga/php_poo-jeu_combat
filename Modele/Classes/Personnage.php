@@ -6,6 +6,7 @@ Class Personnage
 // Attributs
 
     protected $id, $nom, $degats, $image, $erreur = [];
+    private $categorie;
 
 
 // Constantes
@@ -13,7 +14,9 @@ Class Personnage
     const PERSONNAGE_FRAPPE = 1;
     const PERSONNAGE_TUE = 2;
     const CEST_MOI = 3;
-    const POINTS_DEGATS = 20;
+    const MAX_VIE = 100;
+
+
 
 // Méthodes
 
@@ -23,6 +26,7 @@ Class Personnage
     {
         $this->degats = 0;
         $this->image = null;
+        $this->categorie = 'Persodefaut';
         $this->hydratation($data);
     }
 
@@ -123,6 +127,24 @@ Class Personnage
         return $this->erreur;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getCategorie()
+    {
+        return $this->categorie;
+    }
+
+    /**
+     * @param mixed $categorie
+     * @return Personnage
+     */
+    public function setCategorie($categorie)
+    {
+        $this->categorie = $categorie;
+        return $this;
+    }
+
 
 
 ////// Logique métier
@@ -141,14 +163,13 @@ Class Personnage
      * @param Personnage $adversaire
      * @return int|mixed
      */
-    public function frapper(Personnage $adversaire)
+    public function frapper(Personnage $adversaire, Attack $attack)
     {
         if ($this->getId() === $adversaire->getId())
             return self::CEST_MOI;
-        else if ($this->recevoirDegats() === self::PERSONNAGE_TUE)
+        else if ($adversaire->recevoirDegats($attack) === self::PERSONNAGE_TUE)
             return self::PERSONNAGE_TUE;
         else {
-            $adversaire->recevoirDegats();
             return $adversaire->getDegats();
         }
     }
@@ -156,10 +177,10 @@ Class Personnage
     /**
      * @return int
      */
-    public function recevoirDegats()
+    public function recevoirDegats(Attack $attack)
     {
-        $this->setDegats($this->getDegats() + self::POINTS_DEGATS);
-        if ($this->getDegats() >= 100) {
+        $this->setDegats($this->getDegats() + $attack->getPuissance());
+        if ($this->getDegats() >= self::MAX_VIE ) {
             return self::PERSONNAGE_TUE;
         } else
             return self::PERSONNAGE_FRAPPE;

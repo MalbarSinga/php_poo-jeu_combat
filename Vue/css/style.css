@@ -1,3 +1,10 @@
 .container {
     margin:100px auto;
+    max-width:70%
+}
+
+main .container {
+    margin:100px auto;
+    padding: 0 50px;
+    width: 100%;
 }

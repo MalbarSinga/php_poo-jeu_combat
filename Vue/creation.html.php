@@ -24,7 +24,6 @@
 <header>
 
 
-
     <nav class="navbar navbar-expand-md navbar-dark fixed-top">
 
         <div class="collapse navbar-collapse" id="navbarsExampleDefault">
@@ -40,8 +39,9 @@
 
 
 <main role="main" class="container">
-
-
+    <h1 class="text-center">Prêt pour le combat ?</h1>
+    <br/>
+    <br/>
 
     <?php if (isset($erreur)): ?>
         <div class="alert alert-danger">
@@ -57,7 +57,7 @@
         </div>
         <button type="submit" class="btn btn-primary" name="newperso">Créer</button>
     </form>
-<br/>
+    <br/>
     <br/>
     <?php if (isset($erreur2)): ?>
         <div class="alert alert-danger">
@@ -66,16 +66,28 @@
     <?php endif; ?>
     <form method="post">
         <div class="form-group">
-            <label for="nom">Choisir un personnage</label>
+            <!-- <label for="nom">Choisir un personnage</label>
                 <select class="form-control" name="select">
                   <option></option>
-                    <?php foreach ($allpersos as $allperso) :?>
-                  <option value="<?php echo $allperso->getId(); ?>"><?php echo $allperso->getNom() ?></option>
+                    <option value="<?php /*echo $allperso->getId(); */ ?>"><?php /*echo $allperso->getNom() */ ?></option>
+                </select>-->
+            <div class="container2">
+                <div class="row">
+                    <?php foreach ($allpersos as $allperso) : ?>
+                        <div class="col-3">
+                            <div class="form-check">
+                                <input type="radio" class="form-check-input" name="select"
+                                       value="<?php echo $allperso->getId(); ?>">
+                                <label class="form-check-label" for="exampleCheck1"><?php echo $allperso->getNom() ?>
+                                    <br><img src="<?php echo $allperso->getImage(); ?>"></label>
+                            </div>
+                        </div>
                     <?php endforeach ?>
-                </select>
-              </div>
+                </div>
+            </div>
         </div>
-        <button type="submit" class="btn btn-primary" name="oldperso">Ok</button>
+
+        <button type="submit" class="btn btn-primary" name="oldperso">Choisir</button>
     </form>
 </main>
 
